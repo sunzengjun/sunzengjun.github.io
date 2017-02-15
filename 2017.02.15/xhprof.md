@@ -1,6 +1,9 @@
+---
+　　layout: default
+　　title: 你好，xhprof
+---
 #xhprof从安装到卸载
 
-【xhprof】
 	【安装】
 		a. Pecl安装
 		sudo pecl install xhprof
