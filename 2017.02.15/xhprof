@@ -1,0 +1,233 @@
+#xhprof从安装到卸载
+
+【xhprof】
+	【安装】
+		a. Pecl安装
+		sudo pecl install xhprof
+		当然，它会告诉你现在还不是 stable 版本
+		
+		Failed to download pecl/xhprof within preferred state “stable”, latest release is version 0.9.4, stability “beta”, use “channel://pecl.php.net/xhprof-0.9.4” to install
+		所以目前的安装方式是：
+		
+		sudo pecl install channel://pecl.php.net/xhprof-0.9.4
+		
+		我使用上述方法报错了！说是版本问题
+		如下所示，
+		http://www.tuicool.com/articles/ANB7Zr
+		
+		
+		b. 编译安装（我采用的方法）
+		整体步骤
+		1.获取xhprof
+		2.编译前预处理
+		3.编译安装
+		步骤总结：
+		wget http://pecl.php.net/get/xhprof-0.9.4.tgz  
+		tar -zxf xhprof-0.9.4.tgz  
+		cd xhprof-0.9.4    
+		cd extension  
+		phpize  【需要指定与php版本配套的phpize】
+		./configure  --with-php-config=php-config 【php-config也需要配套】
+		make  & make install  
+		
+		1.获取xhprof可以输入网址直接下载，或者wget
+		#wget http://pecl.php.net/get/xhprof-0.9.4.tgz 
+		#tar zxf xhprof-0.9.4.tgz
+		2.编译前预处理在编译xhprof之前，先做一下预处理，生成configure文件；
+		#cd xhprof-0.9.4
+		#cd extension
+		#phpize
+		phpize 没有这个命令用来扩展php扩展模块phpize是属于php-devel的内容，所以只要运行yum install php-devel就行。命令：yum install php-devel -y位置：/usr/bin/phpize
+		3.编译安装
+		#./configure --with-php-config=/usr/bin/php-config
+		#make && make install
+		安装成功
+		
+		需要安装：phpize & php-config
+		主要报错问题：
+			i. API版本不一致
+			PHP Warning:  PHP Startup: memcache: Unable to initialize module
+			Module compiled with module API=20090626
+			PHP    compiled with module API=20121212
+			These options need to match in Unknown on line 0
+			
+			解决思路：
+			找一下phpize、php-config和php是否配套
+			确认一致后，http://blog.csdn.net/justin_bkdrong/article/details/46738629给了思路
+			：在Makefile中发现
+			INCLUDES = -I/usr/include/php -I/usr/include/php/main -I/usr/include/php/TSRM -I/usr/include/php/Zend -I/usr/include/php/ext -I/usr/include/php/ext/date/lib
+			使用的的确是原来安装的php版本
+			
+			20090626 这个串在 Zend_modules.h 中
+			/usr/include/php/Zend 这个目录下
+			定义为：
+			#define ZEND_MODULE_API_NO 20090626
+			而在源码中：
+			#define ZEND_MODULE_API_NO 20131226
+			
+			正因为此，所以php和它的插件不配对，不能初始化
+			
+			解决方法：修改该文件ZEND_MODULE_API_NO值，重新编译安装（注意清理之前编译的残留）
+			附：
+			#define PHP_5_0_X_API_NO        220040412
+			#define PHP_5_1_X_API_NO        220051025
+			#define PHP_5_2_X_API_NO        220060519
+			#define PHP_5_3_X_API_NO        220090626
+			#define PHP_5_4_X_API_NO        220100525
+			#define PHP_5_5_X_API_NO        220121212
+			#define PHP_5_6_X_API_NO        220131226
+			
+	【配置】
+			配置php.ini在php的配置文件后面追加，xhprof扩展，php.ini
+			[xhprof]
+			extension=xhprof.so;
+			xhprof.output_dir=/tmp/xhprof 
+			注:如果是64位系统需要将xhprof.so文件拷贝 /lib64的目录下
+			#cp <modules目录>/xhprof.so /lib64/    （我这么做了，不知道不做有没有效）
+			
+			注意：xhprof.output_dir 指向的目录需要读写权限，（我一开始指向/root/myfile下后，不管怎么chmod都无效）
+			
+			重启php-fpm
+	【搭建环境】
+			• 搭建一个nginx环境，配置php环境
+			• 将整个下载的xhprof文件目录放到指定htdoc目录下，注意包含xhprof_html和xhprof_lib文件夹
+			• 根路径指向：<文件目录>
+			访问，出现如下结果
+				• 访问根目录 <root目录>/
+			
+				• 访问 <root目录>/xhprof_html/index.php
+			
+			
+			
+				• 点击上图链接 
+				链接例子:<root目录>/xhprof_html/index.php?run=58a2a37cb13d0&source=xhprof_foo
+				
+				• 点击[View Full Callgraph]
+				
+			
+				想要查看图形化界面 还需要安装图形化插件
+		【图形化插件】
+		安装攻略：
+		http://blog.chinaunix.net/uid-20622737-id-3820457.html
+		建议：yum安装提示dot 不支持PNG，所以需要安装libpng包
+		所以建议编译安装 先安装lib库
+		资源地址：
+		https://sourceforge.net/projects/libpng/files/
+		
+		wget http://nchc.dl.sourceforge.net/project/libpng/libpng15/1.5.1/libpng-1.5.1.tar.gz  
+		tar zxf libpng-1.5.1.tar.gz  
+		cd libpng-1.5.1  
+		./configure  
+		make  
+		make install  
+		
+		再安装Graphviz 
+		wget http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-2.24.0.tar.gz  
+		tar zxf graphviz-2.24.0.tar.gz  
+		cd graphviz-2.24.0  
+		./configure  
+		make  
+		make install  
+		
+		安装完即可
+		
+	【xhprof使用】
+		【快速使用】
+		接口添加如下代码
+		// start profiling
+		xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
+		// run program
+		原来接口代码
+		// stop profiler
+		$xhprof_data = xhprof_disable();
+		// display raw xhprof data for the profiler run
+		//print_r($xhprof_data);
+		
+		//引入这2个文件
+		$XHPROF_ROOT = realpath(dirname(__FILE__) );
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+		
+		// save raw data for this profiler run using default
+		// implementation of iXHProfRuns.
+		$xhprof_runs = new XHProfRuns_Default();
+		
+		// save the run under a namespace "xhprof_foo"
+		$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_foo");
+		
+		echo "http://<xhprof-ui-address>/index.php?run=$run_id&source=xhprof_foo\n";
+		     
+		【常见错误】
+		
+		使用xhprof会在nginx下报502 Bad Gateway错误
+		我的运行环境Yii + nginx +php5.5.18+centos
+		 
+		xhprof_enable()
+		xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+		修改为：
+		xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
+		【正确结果】
+		
+		
+		【参数解读】
+		Function Name 函数名
+		
+		Calls 调用次数
+		
+		Calls% 调用百分比
+		
+		Incl. Wall Time (microsec) 调用的包括子函数所有花费时间 以微秒算(一百万分之一秒)
+		
+		IWall% 调用的包括子函数所有花费时间的百分比
+		
+		Excl. Wall Time (microsec) 函数执行本身花费的时间，不包括子树执行时间,以微秒算(一百万分之一秒)
+		
+		EWall% 函数执行本身花费的时间的百分比，不包括子树执行时间
+		
+		Incl. CPU(microsecs) 调用的包括子函数所有花费的cpu时间。减Incl. Wall Time即为等待cpu的时间
+		
+		减Excl. Wall Time即为等待cpu的时间
+		
+		ICpu% Incl. CPU(microsecs)的百分比
+		
+		Excl. CPU(microsec) 函数执行本身花费的cpu时间，不包括子树执行时间,以微秒算(一百万分之一秒)。
+		
+		ECPU% Excl. CPU(microsec)的百分比
+		
+		Incl.MemUse(bytes) 包括子函数执行使用的内存。
+		
+		IMemUse% Incl.MemUse(bytes)的百分比
+		
+		Excl.MemUse(bytes) 函数执行本身内存,以字节算
+		
+		EMemUse% Excl.MemUse(bytes)的百分比
+		
+		Incl.PeakMemUse(bytes) Incl.MemUse的峰值
+		
+		IPeakMemUse% Incl.PeakMemUse(bytes) 的峰值百分比
+		
+		Excl.PeakMemUse(bytes) Excl.MemUse的峰值
+		
+		EPeakMemUse% EMemUse% 峰值百分比
+		
+		
+		函数带@，说明是一个递归调用。@后面的数字是递归调用的深度。
+		
+		如何设置xhprof_enable的参数，减少性能消耗
+		xhprof_enable提供了三个常量，用于设置你是否需要统计PHP内置函数，都统计那些指标。
+		三个常量如下：
+		XHPROF_FLAGS_NO_BUILTINS
+		设置这个常量后，将不统计PHP内置函数。毕竟PHP的内置函数性能一般都不错。没必要再消耗性能去统计。所以，建议设置。
+		XHPROF_FLAGS_CPU
+		设置这个常量后，会统计进程占用CPU时间。由于CPU时间是通过调用系统调用getrusage获取，导致性能比较差。开启这个选项后，大概性能下降一半。因此，如果对cpu耗时不是特别敏感的情况下，建议不要启用这个选项。
+		XHPROF_FLAGS_MEMORY
+		设置这个常量后，将会统计内存占用情况。由于获取内存情况，使用的是zend_memory_usage和zend_memory_peak_usage，并不是系统调用。因此，对性能影响不大。如果需要对内存使用情况进行分析的情况下，可以开启。
+		
+		【php7下安装（未实验）】
+		git clone git@github.com:Yaoguais/phpng-xhprof.git ./xhprof
+		cd xhprof
+		phpize
+		./configure
+		make clean && make && make test && sudo make install
+		
+		参考： https://github.com/Yaoguais/phpng-xhprof
