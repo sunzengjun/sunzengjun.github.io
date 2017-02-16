@@ -143,5 +143,5 @@ function generateContent() {
             'data-offset': '50'
         });*/
     }
-    console.log("myAffix!!!");
+    console.log("加载成功,反正也没人看这里吧- -。");
 }
