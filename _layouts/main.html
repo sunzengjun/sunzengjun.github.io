@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+{% include head-main.html %}
+
+    <header>
+    <!-- navbar -->
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">阿牧</a>
+            <p class="navbar-text">PHP Engineer</p>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+              
+                <li>
+              
+                <a href="/"><span class="glyphicon glyphicon-th-large"></span> Blog</a></li>
+
+              
+                
+                  
+                    <li>
+                  
+                  <a href="/about/"><span class="glyphicon glyphicon-heart"></span> About</a></li>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+        <div class="header" id="home">
+          <div class="container">
+            <div class="head">
+              <nav class="navbar navbar-default">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                     <div class="navbar-brand logo wow fadeInLeft animated" data-wow-delay=".5s">
+                      <h1 style="text-align: left"><a  href="index.html">YESTERDAY<br>YOU<br>SAID:<br>TO<span>MO</span>RROW<br></a></h1> 
+
+                    </div>
+                  </div>
+
+                </nav>
+                
+            </div>
+            <div class="banner">           
+              <section class="wrapper wow fadeInUp animated" data-wow-delay=".5s">
+                <h2 >这里系孙曾军的技术博客</h2>
+                <h3 class="sentence">希望能与你
+                <div class="popEffect">
+                  <span> 分享知识 </span>
+                  <span> 共同进步 </span>
+                  <span> 讨论问题 </span>
+                  <span> 交个朋友 </span>
+                </div>
+                </h3>
+              </section>
+              <a href="/" class="hvr-rectangle-out wow fadeInDown animated" data-wow-delay=".5s">More Info.</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div id="main" class="container main">
+      {{ content }}
+    </div>
+
+    <div class="content">
+  <div class="container">
+    <div class="col-top" id="about">
+      <h3>很高兴碰到你 </h3>
+      <p>如果你也是PHP爱好者，如果觉得这个博客不错，欢迎前往<a href="https://github.com/sunzengjun/sunzengjun.github.io">github</a>点个赞，star支持一下</p>
+    </div>
+    <!---->
+      <div class="tab-head">
+       <nav class="col-md-6 nav-sidebar wow fadeInLeft animated" data-wow-delay=".5s">
+        <ul class="nav tabs">
+              <li class="active"><a href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Todo</a></li>
+              <li class=""><a href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>Never to do</a></li> 
+              <li class=""><a href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>闲暇搭的博客</a></li>  
+              <li class=""><a href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span>Todo</a></li>
+              <li class=""><a href="#tab5" data-toggle="tab"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>希望自己积累更多</a></li> 
+        </ul>
+      </nav>
+    <div class="col-md-6 tab-content wow fadeInRight animated" data-wow-delay=".5s"">
+      <div class="tab-pane active text-style" id="tab1">
+        <div class="facts">
+          <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+          <h4>Todo</h4>
+           <p> todo. never to do.</p>
+                          
+         </div>
+      </div>
+      <div class="tab-pane  text-style" id="tab2">
+        <div class="facts">
+          <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+          <h4> Never to do</h4>
+           <p> todo. never to do.</p>
+                          
+         </div>
+      </div>
+      <div class="tab-pane  text-style" id="tab3">
+        <div class="facts">
+          <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+          <h4>闲暇搭的博客</h4>
+           <p> todo. never to do.</p>
+                          
+         </div>
+      </div>
+      <div class="tab-pane text-style" id="tab4">
+        <div class="facts">
+          <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+          <h4>Todo</h4>
+           <p> todo. never to do.</p>
+                          
+         </div>
+      </div>
+      <div class="tab-pane  text-style" id="tab5">
+        <div class="facts">
+          <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+          <h4>希望自己积累更多</h4>
+           <p> todo. never to do.</p>
+                          
+         </div>
+      </div>
+  
+      </div>
+  <div class="clearfix"></div>
+   </div>
+   </div>
+   <!---->
+  <!---->
+<!-- Portfolio Modals -->
+
+
+<!-- /Portfolio Modals -->
+
+
+      </div>
+    <div id="top" data-toggle="tooltip" data-placement="left" title="回到顶部">
+      <a href="javascript:;">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+      </a>
+    </div>
+
+    
+
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"szjblog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+<!-- 在新窗口中打开 -->
+  <script type="text/javascript">
+    function addBlankTargetForLinks () {
+      $('a[href^="http"]').each(function(){
+          $(this).attr('target', '_blank');
+      });
+    }
+    $(document).bind('DOMNodeInserted', function(event) {
+      addBlankTargetForLinks();
+    });
+  </script>
+  </body>
+</html>

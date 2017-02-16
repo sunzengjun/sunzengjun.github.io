@@ -74,7 +74,7 @@ nav{
 .post-list-header{
 	padding: 15px 30px;
 	border-bottom: 1px solid #c0c0c0;
-	font-size: 30px;
+	font-size: 18px;
 	font-weight: bold;
 }
 .post-list-item{
@@ -91,7 +91,7 @@ nav{
 	border-bottom: none;
 }
 .post-list-item h2{
-	font-size: 20px;
+	font-size: 16px;
 	margin: 8px 0 8px 0;
 	padding: 0;
 }
