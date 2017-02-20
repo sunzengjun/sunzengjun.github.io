@@ -167,6 +167,14 @@ footer a:active {color: #bbb}	/* 选定的链接 */
 footer .point{
 	margin: 0 8px;
 }
+/*stat*/
+#cnzz_stat_icon_1261302508{
+	margin-left: 35%;
+}
+#cnzz_stat_icon_1261302508 a:link {color: #aaa}		/* 未访问的链接 */
+#cnzz_stat_icon_1261302508 a:visited {color: #888}	/* 已访问的链接 */
+#cnzz_stat_icon_1261302508 a:hover {color: #bbb;text-decoration: none;}	/* 鼠标移动到链接上 */
+#cnzz_stat_icon_1261302508 a:active {color: #bbb}	/* 选定的链接 */
 /**
  * Icons
  */
