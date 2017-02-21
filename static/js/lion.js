@@ -31,8 +31,8 @@ var HEIGHT,
 
 function init(){
   scene = new THREE.Scene();
-  HEIGHT = window.innerHeight/2;
-  WIDTH = window.innerWidth/2;
+  HEIGHT = (window.innerHeight)/2;
+  WIDTH = (window.innerWidth)/2;
   aspectRatio = WIDTH / HEIGHT;
   fieldOfView = 60;
   nearPlane = 1;
@@ -65,8 +65,8 @@ function init(){
 }
 
 function onWindowResize() {
-  HEIGHT = window.innerHeight;
-  WIDTH = window.innerWidth;
+  HEIGHT = (window.innerHeight)/2;
+  WIDTH = (window.innerWidth)/2;
   windowHalfX = WIDTH / 2;
   windowHalfY = HEIGHT / 2;
   renderer.setSize(WIDTH, HEIGHT);
